@@ -11,7 +11,6 @@
     <style>
         body { font-family: 'Noto Sans Sinhala', sans-serif; scroll-behavior: smooth; overflow-x: hidden; background-color: #ffffff; }
         
-        /* Full Screen Hero with Image Background */
         .hero-section {
             height: 100vh;
             width: 100%;
@@ -26,11 +25,10 @@
             overflow: hidden;
         }
 
-        /* Overlay to make text pop */
         .hero-overlay {
             position: absolute;
             inset: 0;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.5));
+            background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.85));
             z-index: 1;
         }
 
@@ -39,33 +37,70 @@
             z-index: 10;
             text-align: center;
             color: white;
+            width: 100%;
+            max-width: 900px;
+            padding: 0 20px;
         }
 
-        .name-title {
-            font-size: clamp(3rem, 10vw, 8rem);
+        /* --- Particle Dissolve & Blur Reveal --- */
+        .name-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .main-name {
+            font-size: clamp(3rem, 10vw, 6rem);
             font-weight: 900;
+            color: white;
             letter-spacing: -0.02em;
-            text-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            filter: blur(20px);
+            opacity: 0;
+            transform: scale(0.9);
+            animation: reveal-name 3s cubic-bezier(0.22, 1, 0.36, 1) forwards 0.5s;
+            text-shadow: 0 0 30px rgba(255,255,255,0.3);
         }
 
-        /* Floating particles for cinematic effect */
-        .particles-container {
+        @keyframes reveal-name {
+            0% { filter: blur(20px); opacity: 0; transform: scale(0.9); letter-spacing: 0.2em; }
+            100% { filter: blur(0); opacity: 1; transform: scale(1); letter-spacing: -0.02em; }
+        }
+
+        /* Particle Dust Effect */
+        .particles-overlay {
             position: absolute;
-            inset: 0;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             pointer-events: none;
-            z-index: 2;
         }
 
-        .particle {
+        .dust {
             position: absolute;
-            background: rgba(255, 255, 255, 0.2);
+            background: white;
             border-radius: 50%;
-            animation: float-particle var(--duration) ease-in-out infinite;
+            opacity: 0;
+            animation: dust-move var(--d) linear infinite;
         }
 
-        @keyframes float-particle {
-            0%, 100% { transform: translateY(0) translateX(0); opacity: 0; }
-            50% { transform: translateY(-50px) translateX(10px); opacity: 0.5; }
+        @keyframes dust-move {
+            0% { transform: translate(0, 0); opacity: 0; }
+            20% { opacity: 0.8; }
+            100% { transform: translate(var(--x), var(--y)); opacity: 0; }
+        }
+
+        .accent-line {
+            width: 0;
+            height: 4px;
+            background: #dc2626;
+            margin: 1.5rem auto;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(220, 38, 38, 0.5);
+            animation: grow-line 1.5s ease-out forwards 2.5s;
+        }
+
+        @keyframes grow-line {
+            to { width: 150px; }
         }
 
         #scroll-progress { position: fixed; top: 0; left: 0; width: 0%; height: 5px; background: linear-gradient(to right, #d41e1e, #6b21a8); z-index: 100; }
@@ -75,26 +110,29 @@
         .classic-quote { line-height: 2; font-style: italic; border-left: 5px solid rgba(255,255,255,0.4); padding-left: 25px; }
         
         #video-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.9); z-index: 200; backdrop-filter: blur(10px); }
-        .modal-content { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%; max-width: 900px; }
+        .modal-content { position: absolute; top: 50%; left: 50%; transform: translate(-50% , -50%); width: 90%; max-width: 900px; }
     </style>
 </head>
 <body>
     <div id="scroll-progress"></div>
     
-    <!-- Hero Section with Your Image -->
+    <!-- Hero Section -->
     <section class="hero-section">
         <div class="hero-overlay"></div>
-        <div class="particles-container" id="particles"></div>
         
-        <div class="hero-content" data-aos="zoom-out" data-aos-duration="2000">
-            <p class="text-white/80 font-bold tracking-[0.5em] uppercase mb-4 text-xs md:text-sm">A Journey of Integrity & Honor</p>
-            <h1 class="name-title">ජයන්ත මාරපන</h1>
-            <div class="w-24 h-1.5 bg-red-600 mx-auto mt-8 rounded-full shadow-lg"></div>
+        <div class="hero-content">
+            <p class="text-white/40 font-bold tracking-[0.5em] uppercase mb-6 text-xs md:text-sm" data-aos="fade-down">Honoring a Lifetime of Service</p>
             
-            <!-- Down Arrow Animation -->
-            <div class="absolute bottom-[-150px] left-1/2 transform -translate-x-1/2 animate-bounce opacity-50">
-                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+            <div class="name-container">
+                <div class="particles-overlay" id="dust-container"></div>
+                <h1 class="main-name">ජයන්ත මාරපන</h1>
             </div>
+
+            <div class="accent-line"></div>
+            
+            <p class="mt-6 text-xl md:text-2xl font-light text-white/70 italic tracking-wide" data-aos="fade-up" data-aos-delay="3000">
+                "අවංකභාවය ජීවිතයේ පදනමයි"
+            </p>
         </div>
     </section>
 
@@ -160,23 +198,25 @@
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        // --- ANIMATED PARTICLES ---
-        function createParticles() {
-            const container = document.getElementById('particles');
-            const count = 30;
-            for(let i=0; i<count; i++) {
-                const p = document.createElement('div');
-                p.className = 'particle';
-                const size = Math.random() * 5 + 2;
-                p.style.width = size + 'px';
-                p.style.height = size + 'px';
-                p.style.left = Math.random() * 100 + '%';
-                p.style.top = Math.random() * 100 + '%';
-                p.style.setProperty('--duration', (Math.random() * 8 + 4) + 's');
-                container.appendChild(p);
+        // Generate dust particles for reveal effect
+        function initDust() {
+            const container = document.getElementById('dust-container');
+            for(let i=0; i<80; i++) {
+                const d = document.createElement('div');
+                d.className = 'dust';
+                const size = Math.random() * 3 + 1;
+                d.style.width = size + 'px';
+                d.style.height = size + 'px';
+                d.style.left = Math.random() * 100 + '%';
+                d.style.top = Math.random() * 100 + '%';
+                d.style.setProperty('--x', (Math.random() * 200 - 100) + 'px');
+                d.style.setProperty('--y', (Math.random() * -150 - 50) + 'px');
+                d.style.setProperty('--d', (Math.random() * 2 + 1) + 's');
+                d.style.animationDelay = (Math.random() * 3) + 's';
+                container.appendChild(d);
             }
         }
-        createParticles();
+        initDust();
 
         const RAW_URL = "https://youtu.be/CE4oMNqMLc0?si=5JPqeBjJ3aS1WBVB"; 
         function getEmbedUrl(url) {
@@ -195,14 +235,14 @@
         new TypeIt("#typing-text", { 
             strings: "මම දැන් විශ්‍රාම ගත්තත්, ජීවිත කාලය පුරා රැකගත් අගයයන් සහ සේවයේ අභිමානය කිසිදා විශ්‍රාම ගන්නේ නැහැ.", 
             speed: 55, 
-            startDelay: 1000,
+            startDelay: 4000, 
             waitUntilVisible: true
         }).go();
 
         new TypeIt("#typing-politics", { 
             strings: "දේශපාලනය යනු හුදු බලය ලබා ගැනීම නොව, පොදු ජනතාවගේ යහපත උදෙසා අවංකව කැපවීමයි.", 
             speed: 55, 
-            startDelay: 1500,
+            startDelay: 1000,
             waitUntilVisible: true
         }).go();
 
