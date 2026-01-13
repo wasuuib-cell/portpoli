@@ -13,122 +13,173 @@
             font-family: 'Noto Sans Sinhala', sans-serif;
             scroll-behavior: smooth;
             overflow-x: hidden;
+            background-color: #f8fafc;
         }
         .text-glow {
-            text-shadow: 0 0 20px rgba(255,255,255,0.8), 0 0 10px rgba(0,0,0,0.1);
+            text-shadow: 0 0 30px rgba(255,255,255,0.8), 0 5px 15px rgba(0,0,0,0.05);
         }
         .img-shadow {
-            filter: drop-shadow(0 20px 30px rgba(0,0,0,0.2));
+            filter: drop-shadow(0 25px 50px rgba(0,0,0,0.15));
         }
         .gradient-bg {
-            background: radial-gradient(circle at center, #ffffff 0%, #f3f4f6 100%);
+            background: radial-gradient(circle at 50% 50%, #ffffff 0%, #e2e8f0 100%);
         }
 
-        /* Custom Reveal Animation */
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 1s ease-out;
+        /* Mouse Tilt Effect Container */
+        .tilt-container {
+            perspective: 1000px;
         }
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
+        .tilt-card {
+            transition: transform 0.2s ease-out;
+            transform-style: preserve-3d;
+        }
+
+        /* Custom Progress Bar for Scroll */
+        #scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: #d41e1e;
+            z-index: 100;
+        }
+
+        /* Glassmorphism Effect */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px border rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
         }
     </style>
 </head>
 <body class="bg-white">
 
-    <!-- Hero Section (First Image) -->
+    <!-- Scroll Progress Bar -->
+    <div id="scroll-progress"></div>
+
+    <!-- Hero Section -->
     <section class="relative min-h-screen flex flex-col items-center justify-center pt-10 overflow-hidden gradient-bg">
-        <div class="container mx-auto px-4 flex flex-col items-center">
+        <!-- Parallax Background Elements -->
+        <div class="absolute top-20 left-10 w-32 h-32 bg-red-100 rounded-full blur-3xl opacity-60 animate-pulse"></div>
+        <div class="absolute bottom-20 right-10 w-64 h-64 bg-blue-100 rounded-full blur-3xl opacity-60"></div>
+
+        <div class="container mx-auto px-4 flex flex-col items-center z-10">
             
-            <!-- Main Large Image - Fixed (No Floating Animation) -->
-            <div class="relative w-full max-w-5xl transition-transform duration-700 hover:scale-105" data-aos="zoom-in" data-aos-duration="1500">
-                <img src="WhatsApp_Image_2026-01-13_at_6.45.51_PM-removebg-preview.png" 
-                     alt="Jayantha Marapana" 
-                     class="w-full h-auto img-shadow z-10 relative">
+            <!-- Main Large Image - With Tilt Effect -->
+            <div class="tilt-container relative w-full max-w-5xl">
+                <div class="tilt-card" id="hero-tilt">
+                    <img src="WhatsApp_Image_2026-01-13_at_6.45.51_PM-removebg-preview.png" 
+                         alt="Jayantha Marapana" 
+                         class="w-full h-auto img-shadow relative z-10"
+                         data-aos="zoom-in" 
+                         data-aos-duration="1800">
+                </div>
                 
-                <!-- Background Decorative Circle with Pulse -->
-                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] bg-blue-100 rounded-full -z-0 opacity-40 blur-3xl animate-pulse"></div>
+                <!-- Background Decorative Circle -->
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70%] h-[70%] bg-white rounded-full -z-0 opacity-50 blur-2xl"></div>
             </div>
 
-            <!-- Name with Slide Up Animation -->
-            <div class="text-center -mt-10 md:-mt-20 z-20 relative" data-aos="fade-up" data-aos-delay="500">
-                <h1 class="text-5xl md:text-8xl font-black text-slate-900 tracking-tighter text-glow">
+            <!-- Name with Magnetic Effect -->
+            <div class="text-center -mt-12 md:-mt-24 z-20 relative" data-aos="fade-up" data-aos-delay="600">
+                <h1 class="text-6xl md:text-9xl font-black text-slate-900 tracking-tighter text-glow select-none">
                     ජයන්ත මාරපන
                 </h1>
-                <div class="w-24 h-1 bg-red-600 mx-auto mt-4 rounded-full" data-aos="width-expand" data-aos-delay="800"></div>
+                <p class="text-gray-500 font-medium tracking-[0.5em] mt-2 uppercase text-sm md:text-base" data-aos="fade-in" data-aos-delay="1000">
+                    Portfolio Experience
+                </p>
+                <div class="w-32 h-1.5 bg-red-600 mx-auto mt-6 rounded-full" data-aos="width-expand" data-aos-delay="1200"></div>
             </div>
+        </div>
+        
+        <!-- Scroll Indicator Animation -->
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce opacity-40">
+            <svg class="w-6 h-6 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            </svg>
         </div>
     </section>
 
-    <!-- Bank Section (Second Image) -->
-    <section class="bg-[#d41e1e] py-32 px-6 relative overflow-hidden">
-        <!-- Background Pattern Decor -->
-        <div class="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
-            <div class="absolute top-[-10%] left-[-5%] w-64 h-64 bg-white rounded-full blur-3xl"></div>
-            <div class="absolute bottom-[-10%] right-[-5%] w-96 h-96 bg-black rounded-full blur-3xl"></div>
+    <!-- Bank Section -->
+    <section class="bg-[#d41e1e] py-40 px-6 relative overflow-hidden">
+        <!-- Floating Shapes Animation -->
+        <div class="absolute top-0 left-0 w-full h-full pointer-events-none">
+            <div class="absolute top-20 left-[10%] w-20 h-20 bg-white/5 rounded-full blur-xl animate-blob"></div>
+            <div class="absolute bottom-20 right-[15%] w-40 h-40 bg-black/10 rounded-full blur-2xl animate-blob animation-delay-2000"></div>
         </div>
 
-        <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-12 relative z-10">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-16 relative z-10">
             
-            <!-- Bank Image with Side Slide -->
-            <div class="w-full md:w-1/2 flex justify-center md:justify-end" data-aos="fade-right" data-aos-duration="1200">
-                <div class="bg-white/10 p-4 rounded-3xl backdrop-blur-md border border-white/20 shadow-2xl transition-all hover:bg-white/20">
+            <!-- Bank Image with Glass Effect & Hover Animation -->
+            <div class="w-full md:w-1/2 flex justify-center md:justify-end" data-aos="fade-right">
+                <div class="glass-card p-6 rounded-[2rem] transition-all duration-500 hover:rotate-2 hover:scale-105">
                     <img src="images-removebg-preview (1).png" 
                          alt="People's Bank" 
-                         class="w-full max-w-sm rounded-2xl shadow-2xl transition-transform hover:scale-105 duration-500">
+                         class="w-full max-w-sm rounded-xl shadow-2xl">
                 </div>
             </div>
 
-            <!-- Bank Text with Staggered Fade -->
+            <!-- Bank Text with Reveal Animation -->
             <div class="w-full md:w-1/2 text-white text-center md:text-left">
-                <h2 class="text-4xl md:text-6xl font-bold leading-tight mb-4" data-aos="fade-up" data-aos-delay="200">
-                    මම මහජන බැංකු නිලධාරියෙකි
-                </h2>
-                <p class="text-xl text-red-100 font-light tracking-wide mb-8" data-aos="fade-up" data-aos-delay="400">
-                    Serving with pride at People's Bank
+                <div class="overflow-hidden">
+                    <h2 class="text-5xl md:text-7xl font-bold leading-tight mb-6" data-aos="fade-up">
+                        මම මහජන බැංකු නිලධාරියෙකි
+                    </h2>
+                </div>
+                <p class="text-2xl text-red-100 font-light mb-10 block" data-aos="fade-up" data-aos-delay="300">
+                    Trusted Banking Excellence for Generations
                 </p>
-                <div class="flex justify-center md:justify-start" data-aos="zoom-in" data-aos-delay="600">
-                    <span class="inline-block px-8 py-3 border-2 border-white/40 rounded-full text-sm font-semibold hover:bg-white hover:text-red-600 transition-all duration-300 cursor-pointer uppercase tracking-widest">
-                        Professional Profile
-                    </span>
+                <div class="flex justify-center md:justify-start" data-aos="zoom-in" data-aos-delay="500">
+                    <a href="#" class="group relative inline-flex items-center justify-center px-10 py-4 font-bold text-white transition-all duration-300 bg-black rounded-full hover:bg-white hover:text-red-600">
+                        <span>Contact Me</span>
+                        <svg class="w-5 h-5 ml-2 transition-transform group-hover:translate-x-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                        </svg>
+                    </a>
                 </div>
             </div>
 
         </div>
     </section>
 
-    <!-- Footer Space -->
-    <footer class="py-12 text-center text-gray-400 text-sm border-t border-gray-100 bg-white">
-        <p data-aos="fade-in">© 2026 Jayantha Marapana. All Rights Reserved.</p>
+    <!-- Footer -->
+    <footer class="py-16 text-center bg-white">
+        <div class="max-w-xs mx-auto mb-6">
+            <div class="h-px bg-gray-200"></div>
+        </div>
+        <p class="text-gray-400 text-sm font-medium tracking-widest uppercase" data-aos="fade-in">
+            © 2026 Jayantha Marapana
+        </p>
     </footer>
 
-    <!-- AOS Script Initialization -->
+    <!-- Scripts -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        // Initialize Animations
+        // Initialize AOS
         AOS.init({
             duration: 1000,
             once: false,
-            mirror: true
+            mirror: true,
+            offset: 120
         });
 
-        // Smooth reveal on scroll for extra custom items
-        window.addEventListener('scroll', reveal);
-        function reveal() {
-            var reveals = document.querySelectorAll('.reveal');
-            for (var i = 0; i < reveals.length; i++) {
-                var windowheight = window.innerHeight;
-                var revealtop = reveals[i].getBoundingClientRect().top;
-                var revealpoint = 150;
-                if (revealtop < windowheight - revealpoint) {
-                    reveals[i].classList.add('active');
-                } else {
-                    reveals[i].classList.remove('active');
-                }
-            }
-        }
+        // Scroll Progress Logic
+        window.onscroll = function() {
+            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            let scrolled = (winScroll / height) * 100;
+            document.getElementById("scroll-progress").style.width = scrolled + "%";
+        };
+
+        // Hero Tilt Animation Logic
+        const tiltCard = document.getElementById('hero-tilt');
+        window.addEventListener('mousemove', (e) => {
+            let x = (window.innerWidth / 2 - e.pageX) / 25;
+            let y = (window.innerHeight / 2 - e.pageY) / 25;
+            tiltCard.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
+        });
     </script>
 </body>
 </html>
