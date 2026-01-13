@@ -8,6 +8,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@400;700;900&display=swap" rel="stylesheet">
     <!-- AOS Animation Library -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- TypeIt JS for Typing Animation -->
+    <script src="https://unpkg.com/typeit@8.7.1/dist/index.umd.js"></script>
     <style>
         body {
             font-family: 'Noto Sans Sinhala', sans-serif;
@@ -41,7 +43,7 @@
             left: 0;
             width: 0%;
             height: 4px;
-            background: #d41e1e;
+            background: #ffffff;
             z-index: 100;
         }
 
@@ -50,8 +52,22 @@
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border: 1px border rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        /* Classic Typing Cursor */
+        .ti-cursor {
+            color: #ffcccc;
+            font-weight: 100;
+            font-size: 2rem;
+        }
+
+        .classic-quote {
+            line-height: 1.8;
+            font-style: italic;
+            border-left: 4px solid rgba(255,255,255,0.3);
+            padding-left: 20px;
         }
     </style>
 </head>
@@ -62,13 +78,11 @@
 
     <!-- Hero Section -->
     <section class="relative min-h-screen flex flex-col items-center justify-center pt-10 overflow-hidden gradient-bg">
-        <!-- Parallax Background Elements -->
         <div class="absolute top-20 left-10 w-32 h-32 bg-red-100 rounded-full blur-3xl opacity-60 animate-pulse"></div>
         <div class="absolute bottom-20 right-10 w-64 h-64 bg-blue-100 rounded-full blur-3xl opacity-60"></div>
 
         <div class="container mx-auto px-4 flex flex-col items-center z-10">
-            
-            <!-- Main Large Image - With Tilt Effect -->
+            <!-- Main Large Image -->
             <div class="tilt-container relative w-full max-w-5xl">
                 <div class="tilt-card" id="hero-tilt">
                     <img src="WhatsApp_Image_2026-01-13_at_6.45.51_PM-removebg-preview.png" 
@@ -77,12 +91,10 @@
                          data-aos="zoom-in" 
                          data-aos-duration="1800">
                 </div>
-                
-                <!-- Background Decorative Circle -->
                 <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70%] h-[70%] bg-white rounded-full -z-0 opacity-50 blur-2xl"></div>
             </div>
 
-            <!-- Name with Magnetic Effect -->
+            <!-- Name -->
             <div class="text-center -mt-12 md:-mt-24 z-20 relative" data-aos="fade-up" data-aos-delay="600">
                 <h1 class="text-6xl md:text-9xl font-black text-slate-900 tracking-tighter text-glow select-none">
                     ජයන්ත මාරපන
@@ -94,7 +106,6 @@
             </div>
         </div>
         
-        <!-- Scroll Indicator Animation -->
         <div class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce opacity-40">
             <svg class="w-6 h-6 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
@@ -104,15 +115,13 @@
 
     <!-- Bank Section -->
     <section class="bg-[#d41e1e] py-40 px-6 relative overflow-hidden">
-        <!-- Floating Shapes Animation -->
         <div class="absolute top-0 left-0 w-full h-full pointer-events-none">
             <div class="absolute top-20 left-[10%] w-20 h-20 bg-white/5 rounded-full blur-xl animate-blob"></div>
             <div class="absolute bottom-20 right-[15%] w-40 h-40 bg-black/10 rounded-full blur-2xl animate-blob animation-delay-2000"></div>
         </div>
 
         <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-16 relative z-10">
-            
-            <!-- Bank Image with Glass Effect & Hover Animation -->
+            <!-- Bank Image -->
             <div class="w-full md:w-1/2 flex justify-center md:justify-end" data-aos="fade-right">
                 <div class="glass-card p-6 rounded-[2rem] transition-all duration-500 hover:rotate-2 hover:scale-105">
                     <img src="images-removebg-preview (1).png" 
@@ -121,26 +130,28 @@
                 </div>
             </div>
 
-            <!-- Bank Text with Reveal Animation -->
+            <!-- Bank Text & Classic Typing -->
             <div class="w-full md:w-1/2 text-white text-center md:text-left">
-                <div class="overflow-hidden">
-                    <h2 class="text-5xl md:text-7xl font-bold leading-tight mb-6" data-aos="fade-up">
+                <div class="overflow-hidden mb-4">
+                    <h2 class="text-5xl md:text-7xl font-bold leading-tight" data-aos="fade-up">
                         මම මහජන බැංකු නිලධාරියෙකි
                     </h2>
                 </div>
-                <p class="text-2xl text-red-100 font-light mb-10 block" data-aos="fade-up" data-aos-delay="300">
-                    Trusted Banking Excellence for Generations
-                </p>
-                <div class="flex justify-center md:justify-start" data-aos="zoom-in" data-aos-delay="500">
-                    <a href="#" class="group relative inline-flex items-center justify-center px-10 py-4 font-bold text-white transition-all duration-300 bg-black rounded-full hover:bg-white hover:text-red-600">
-                        <span>Contact Me</span>
+                
+                <!-- Typing Area - Classic Look -->
+                <div class="min-h-[140px] flex items-center">
+                    <p id="typing-text" class="text-2xl md:text-3xl font-light text-red-50 classic-quote leading-relaxed"></p>
+                </div>
+                
+                <div class="flex justify-center md:justify-start mt-8" data-aos="zoom-in" data-aos-delay="500">
+                    <a href="#" class="group relative inline-flex items-center justify-center px-10 py-4 font-bold text-black transition-all duration-300 bg-white rounded-full hover:bg-black hover:text-white">
+                        <span>සම්බන්ධ වන්න</span>
                         <svg class="w-5 h-5 ml-2 transition-transform group-hover:translate-x-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
                         </svg>
                     </a>
                 </div>
             </div>
-
         </div>
     </section>
 
@@ -157,7 +168,6 @@
     <!-- Scripts -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        // Initialize AOS
         AOS.init({
             duration: 1000,
             once: false,
@@ -165,7 +175,18 @@
             offset: 120
         });
 
-        // Scroll Progress Logic
+        // Classic Typing Logic
+        new TypeIt("#typing-text", {
+            strings: "මම දැන් විශ්‍රාම ගත්තත්, ජීවිත කාලය පුරා රැකගත් අගයයන් සහ සේවයේ අභිමානය කිසිදා විශ්‍රාම ගන්නේ නැහැ.",
+            speed: 60,
+            startDelay: 1200,
+            waitUntilVisible: true,
+            cursor: true,
+            afterComplete: function(instance) {
+                instance.destroy(); // Optional: remove cursor after finishing
+            }
+        }).go();
+
         window.onscroll = function() {
             let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
             let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
@@ -173,11 +194,10 @@
             document.getElementById("scroll-progress").style.width = scrolled + "%";
         };
 
-        // Hero Tilt Animation Logic
         const tiltCard = document.getElementById('hero-tilt');
         window.addEventListener('mousemove', (e) => {
-            let x = (window.innerWidth / 2 - e.pageX) / 25;
-            let y = (window.innerHeight / 2 - e.pageY) / 25;
+            let x = (window.innerWidth / 2 - e.pageX) / 35;
+            let y = (window.innerHeight / 2 - e.pageY) / 35;
             tiltCard.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
         });
     </script>
